@@ -16,7 +16,7 @@
             <a-entity material='color: red' geometry='primitive: box' gps-new-entity-place="latitude: 35.784223110391; longitude: 139.67906111159;" scale="10 10 10"></a-entity>
             <a-entity material='color: blue' geometry='primitive: box' gps-new-entity-place="latitude: 35.787063624636; longitude: 139.67287952337;" scale="10 10 10"></a-entity>
             <a-text text="value: Hello, w あいうえお orld!;" gps-new-entity-place="latitude: 35.7858807; longitude: 139.6747881;" scale="50 50 50"></a-text>
-            
+
             <a-entity mb-text position="1.5 1.5 -1" data-text="新.こんにちは世界(script)🌝"></a-entity>
         </a-scene>
     </body>
@@ -51,7 +51,26 @@
     });
 };
 */
+function aframeMutlByte(){
+    document.querySelectorAll('[mb-text]:empty').forEach(mb_text=>{
+        console.log(mb_text.dataset.text)
+        const text  =mb_text.dataset.text
+        const text_cnt = text.length
+        const width = text_cnt*1.4
+        const height= 1.6
+        let cvs = document.createElement('canvas')
+        let ctx = cvs.getContext('2d')
+        cvs.width = width*100
+        cvs.height = height*100
+        ctx.fillStyle = "rgb(0, 0, 0)"
+        ctx.font = '100pt Arial'
+        ctx.fillText(text,0,125)
 
+        const base64 = cvs.toDataURL("image/png")
+        mb_text.innerHTML=`<a-image scale="${(width)/10} ${height/10} 1" src="${base64}"></a-image>`
+    })
+}
+    aframeMutlByte()
 //add text label
 window.onload = () => {
     let downloaded = false;
